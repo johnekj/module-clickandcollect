@@ -2,9 +2,8 @@
 
 namespace MageClass\ClickAndCollect\Setup;
 
-use MageClass\ClickAndCollect\Model\Store;
-use MageClass\ClickAndCollect\Model\StoreFactory;
 use MageClass\ClickAndCollect\Api\StoreRepositoryInterface;
+use MageClass\ClickAndCollect\Model\StoreFactory;
 use Magento\Framework\Setup\InstallDataInterface;
 use Magento\Framework\Setup\ModuleContextInterface;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
@@ -12,7 +11,7 @@ use Magento\Framework\Stdlib\DateTime\DateTime;
 
 class InstallData implements InstallDataInterface
 {
-	/**
+    /**
      * Store factory
      *
      * @var StoreFactory
@@ -22,7 +21,7 @@ class InstallData implements InstallDataInterface
     /**
      * Store repository
      *
-     * @var StoreRepository
+     * @var StoreRepositoryInterface
      */
     private $storeRepository;
 
@@ -49,10 +48,10 @@ class InstallData implements InstallDataInterface
 
     public function install(ModuleDataSetupInterface $setup, ModuleContextInterface $context)
     {
-    	$dataSet = [
-    		[
-    			'name' => 'Countdown Newmarket',
-    			'address' => '277 Cnr Broadway & Morrow Streets 
+        $dataSet = [
+            [
+                'name' => 'Countdown Newmarket',
+                'address' => '277 Cnr Broadway & Morrow Streets 
 Newmarket Auckland',
                 'working_time' => 'Monday: 7am - 10pm
 Tuesday: 7am - 10pm
@@ -64,7 +63,7 @@ Sunday: CLOSED',
                 'latitude' => '-36.87053600000000',
                 'longitude' => '174.77736500000000',
                 'is_active' => 1
-    		],
+            ],
             [
                 'name' => 'Countdown Browns Bay',
                 'address' => 'Cnr Anzac & Clyde Roads
@@ -189,10 +188,10 @@ Sunday: CLOSED',
                 'longitude' => '172.52731300000000',
                 'is_active' => 1
             ]
-    	];
+        ];
 
-    	foreach ($dataSet as $data) {
-    		$store = $this->storeFactory->create();
+        foreach ($dataSet as $data) {
+            $store = $this->storeFactory->create();
             $store->setData($data);
             $this->storeRepository->save($store);
         }
