@@ -1,58 +1,60 @@
 <?php
 
-namespace MageClass\ClickAndCollect\Setup;
+namespace MageClass\ClickAndCollect\Setup\Patch\Data;
 
-use MageClass\ClickAndCollect\Api\StoreRepositoryInterface;
-use MageClass\ClickAndCollect\Model\StoreFactory;
-use Magento\Framework\Setup\InstallDataInterface;
-use Magento\Framework\Setup\ModuleContextInterface;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
-use Magento\Framework\Stdlib\DateTime\DateTime;
+use Magento\Framework\Setup\Patch\DataPatchInterface;
+use Magento\Inventory\Model\SourceFactory;
+use Magento\InventoryApi\Api\SourceRepositoryInterface;
 
-class InstallData implements InstallDataInterface
+class SampleSources implements DataPatchInterface
 {
     /**
-     * Store factory
-     *
-     * @var StoreFactory
+     * @var ModuleDataSetupInterface
      */
-    protected $storeFactory;
+    private $moduleDataSetup;
+    /**
+     * @var SourceFactory
+     */
+    private $sourceFactory;
 
     /**
-     * Store repository
-     *
-     * @var StoreRepositoryInterface
+     * @var SourceRepositoryInterface
      */
-    private $storeRepository;
+    private $sourceRepository;
 
-    /**
-     *
-     * @var \Magento\Framework\Stdlib\DateTime\DateTime
-     */
-    protected $date;
-
-    /**
-     * Init
-     *
-     * @param StoreFactory $storeFactory
-     */
     public function __construct(
-        StoreFactory $storeFactory,
-        StoreRepositoryInterface $storeRepository,
-        DateTime $date
+        ModuleDataSetupInterface $moduleDataSetup,
+        SourceFactory $sourceFactory,
+        SourceRepositoryInterface $sourceRepository
     ) {
-        $this->storeFactory = $storeFactory;
-        $this->storeRepository = $storeRepository;
-        $this->date = $date;
+        $this->moduleDataSetup = $moduleDataSetup;
+        $this->sourceFactory = $sourceFactory;
+        $this->sourceRepository = $sourceRepository;
     }
 
-    public function install(ModuleDataSetupInterface $setup, ModuleContextInterface $context)
+    public function apply()
     {
-        $dataSet = [
+        $this->moduleDataSetup->getConnection()->startSetup();
+
+        $i = 1;
+        foreach ($this->sampleSources() as $data) {
+            $source = $this->sourceFactory->create();
+            $source->setData($data);
+            $source->setSourceCode('sample' . $i++);
+            $this->sourceRepository->save($source);
+        }
+
+        $this->moduleDataSetup->getConnection()->endSetup();
+    }
+
+    private function sampleSources()
+    {
+        return [
             [
                 'name' => 'Countdown Newmarket',
-                'address' => '277 Cnr Broadway & Morrow Streets 
-Newmarket Auckland',
+                'street' => '277 Cnr Broadway & Morrow Streets',
+                'city' => 'Newmarket Auckland',
                 'working_time' => 'Monday: 7am - 10pm
 Tuesday: 7am - 10pm
 Wednesday: 7am - 10pm
@@ -62,13 +64,14 @@ Saturday: 7am - 10pm
 Sunday: CLOSED',
                 'latitude' => '-36.87053600000000',
                 'longitude' => '174.77736500000000',
-                'is_active' => 1
+                'enabled' => 1,
+                'country_id' => 'NZ',
+                'postcode' => 'Test',
             ],
             [
                 'name' => 'Countdown Browns Bay',
-                'address' => 'Cnr Anzac & Clyde Roads
-Browns Bay
-Auckland',
+                'street' => 'Cnr Anzac & Clyde Roads',
+                'city' => 'Auckland',
                 'working_time' => 'Monday: 7am - 10pm
 Tuesday: 7am - 10pm
 Wednesday: 7am - 10pm
@@ -78,12 +81,14 @@ Saturday: 7am - 10pm
 Sunday: CLOSED',
                 'latitude' => '-36.71655900000000',
                 'longitude' => '174.74788000000000',
-                'is_active' => 1
+                'enabled' => 1,
+                'country_id' => 'NZ',
+                'postcode' => 'Test',
             ],
             [
                 'name' => 'Countdown Waiheke Island',
-                'address' => '13-19 Belgium Street
-Waiheke Island',
+                'street' => '13-19 Belgium Street',
+                'city' => 'Waiheke Island',
                 'working_time' => 'Monday: 7am - 10pm
 Tuesday: 7am - 10pm
 Wednesday: 7am - 10pm
@@ -93,13 +98,15 @@ Saturday: 7am - 10pm
 Sunday: CLOSED',
                 'latitude' => '-36.79625400000000',
                 'longitude' => '175.04601300000000',
-                'is_active' => 1
+                'enabled' => 1,
+                'country_id' => 'NZ',
+                'postcode' => 'Test',
             ],
             [
                 'name' => '76 Quay Street
 Auckland City',
-                'address' => '76 Quay Street
-Auckland City',
+                'street' => '76 Quay Street',
+                'city' => 'Auckland City',
                 'working_time' => 'Monday: 7am - 10pm
 Tuesday: 7am - 10pm
 Wednesday: 7am - 10pm
@@ -109,12 +116,14 @@ Saturday: 7am - 10pm
 Sunday: CLOSED',
                 'latitude' => '-36.84522100000000',
                 'longitude' => '174.77293900000000',
-                'is_active' => 1
+                'enabled' => 1,
+                'country_id' => 'NZ',
+                'postcode' => 'Test',
             ],
             [
                 'name' => 'Countdown Whitianga',
-                'address' => '24 Joan Gaskell Drive
-Whitianga',
+                'street' => '24 Joan Gaskell Drive',
+                'city' => 'Whitianga',
                 'working_time' => 'Monday: 7am - 10pm
 Tuesday: 7am - 10pm
 Wednesday: 7am - 10pm
@@ -124,12 +133,14 @@ Saturday: 7am - 10pm
 Sunday: CLOSED',
                 'latitude' => '-36.83480400000000',
                 'longitude' => '175.69873900000000',
-                'is_active' => 1
+                'enabled' => 1,
+                'country_id' => 'NZ',
+                'postcode' => 'Test',
             ],
             [
                 'name' => 'Countdown Greerton',
-                'address' => '1368 Cameron Road
-Tauranga',
+                'street' => '1368 Cameron Road',
+                'city' => 'Tauranga',
                 'working_time' => 'Monday: 7am - 10pm
 Tuesday: 7am - 10pm
 Wednesday: 7am - 10pm
@@ -139,12 +150,14 @@ Saturday: 7am - 10pm
 Sunday: CLOSED',
                 'latitude' => '-37.72748000000000',
                 'longitude' => '176.13206100000000',
-                'is_active' => 1
+                'enabled' => 1,
+                'country_id' => 'NZ',
+                'postcode' => 'Test',
             ],
             [
                 'name' => 'Countdown Nelson',
-                'address' => '35 St Vincent Street
-Nelson',
+                'street' => '35 St Vincent Street',
+                'city' => 'Nelson',
                 'working_time' => 'Monday: 7am - 10pm
 Tuesday: 7am - 10pm
 Wednesday: 7am - 10pm
@@ -154,13 +167,14 @@ Saturday: 7am - 10pm
 Sunday: CLOSED',
                 'latitude' => '-41.27283400000000',
                 'longitude' => '173.27742200000000',
-                'is_active' => 1
+                'enabled' => 1,
+                'country_id' => 'NZ',
+                'postcode' => 'Test',
             ],
             [
                 'name' => 'Countdown Church Corner',
-                'address' => 'Cnr Riccarton Road & Hansons Lane
-Riccarton
-Christchurch',
+                'street' => 'Cnr Riccarton Road & Hansons Lane',
+                'city' => 'Christchurch',
                 'working_time' => 'Monday: 7am - 10pm
 Tuesday: 7am - 10pm
 Wednesday: 7am - 10pm
@@ -170,13 +184,14 @@ Saturday: 7am - 10pm
 Sunday: CLOSED',
                 'latitude' => '-43.53177500000000',
                 'longitude' => '172.57370900000000',
-                'is_active' => 1
+                'enabled' => 1,
+                'country_id' => 'NZ',
+                'postcode' => 'Test',
             ],
             [
                 'name' => 'Countdown Hornby',
-                'address' => '17 Chappie Place
-Hornby
-Christchurch 8042',
+                'street' => '17 Chappie Place, Hornby',
+                'city' => 'Christchurch 8042',
                 'working_time' => 'Monday: 7am - 10pm
 Tuesday: 7am - 10pm
 Wednesday: 7am - 10pm
@@ -186,14 +201,20 @@ Saturday: 7am - 10pm
 Sunday: CLOSED',
                 'latitude' => '-43.54251400000000',
                 'longitude' => '172.52731300000000',
-                'is_active' => 1
+                'enabled' => 1,
+                'country_id' => 'NZ',
+                'postcode' => 'Test',
             ]
         ];
+    }
 
-        foreach ($dataSet as $data) {
-            $store = $this->storeFactory->create();
-            $store->setData($data);
-            $this->storeRepository->save($store);
-        }
+    public static function getDependencies()
+    {
+        return [];
+    }
+
+    public function getAliases()
+    {
+        return [];
     }
 }
