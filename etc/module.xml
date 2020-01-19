@@ -11,6 +11,7 @@
     <module name="MageClass_ClickAndCollect" setup_version="1.0.0">
     	<sequence>
 	        <module name="Magento_Checkout"/>
+			<module name="Magento_Inventory"/>
 	    </sequence>
     </module>
 </config>
