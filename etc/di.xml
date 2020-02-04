@@ -12,6 +12,12 @@
         <plugin name="savePickupInfoToQuote" 
         		type="MageClass\ClickAndCollect\Plugin\Checkout\Model\ShippingInformationManagement" />
     </type>
+    <type name="Magento\Inventory\Model\ResourceModel\Source">
+        <plugin name="source_working_time" type="MageClass\ClickAndCollect\Plugin\Inventory\Model\ResourceModel\Source" />
+    </type>
+    <type name="Magento\InventoryAdminUi\Ui\DataProvider\SourceDataProvider">
+        <plugin name="source_data_provider_working_time" type="MageClass\ClickAndCollect\Plugin\InventoryAdminUi\Ui\DataProvider\SourceDataProvider" />
+    </type>
     <preference for="MageClass\ClickAndCollect\Api\Data\StoreInterface" type="MageClass\ClickAndCollect\Model\Store" />
     <preference for="MageClass\ClickAndCollect\Api\StoreRepositoryInterface" type="MageClass\ClickAndCollect\Model\StoreRepository" />
 </config>

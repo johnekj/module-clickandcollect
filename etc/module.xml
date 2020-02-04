@@ -12,6 +12,7 @@
     	<sequence>
 	        <module name="Magento_Checkout"/>
 			<module name="Magento_Inventory"/>
+			<module name="Magento_InventoryAdminUi"/>
 	    </sequence>
     </module>
 </config>

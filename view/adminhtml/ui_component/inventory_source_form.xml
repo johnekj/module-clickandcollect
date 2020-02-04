@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <fieldset name="contact_info">
+        <field name="working_time" formElement="textarea" sortOrder="50">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="rows" xsi:type="number">10</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>textarea</dataType>
+                <label translate="true">Working Time</label>
+            </settings>
+        </field>
+    </fieldset>
+</form>

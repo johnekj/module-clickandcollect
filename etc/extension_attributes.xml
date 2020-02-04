@@ -12,4 +12,7 @@
         <attribute code="pickup_store" type="string"/>
         <attribute code="pickup_date" type="string"/>
     </extension_attributes>
+    <extension_attributes for="Magento\InventoryApi\Api\Data\SourceInterface">
+        <attribute code="working_time" type="string" />
+    </extension_attributes>
 </config>
